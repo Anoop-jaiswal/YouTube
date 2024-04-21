@@ -7,8 +7,6 @@ function Navbar() {
       <div>
         <GiHamburgerMenu />
       </div>
-      <div></div>
-      <div></div>
     </>
   );
 }
