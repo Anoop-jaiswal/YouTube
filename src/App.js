@@ -1,6 +1,5 @@
 import Body from "./components/Body";
 import Head from "./components/Head";
-import { Profiler } from "react";
 import store from "./utils/store";
 import { Provider } from "react-redux";
 
