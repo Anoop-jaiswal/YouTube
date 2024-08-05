@@ -19,7 +19,7 @@ const ButtonList = () => {
   return (
     <div className="flex">
       {list.map((name) => (
-        <Button name={name} />
+        <Button name={name} key={name} />
       ))}
     </div>
   );
