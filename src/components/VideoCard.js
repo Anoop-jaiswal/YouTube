@@ -10,7 +10,7 @@ const VideoCard = ({ info }) => {
   console.log(channelTitle, title, thumbnails);
 
   return (
-    <div className="p-2 m-2 w-64 shadow-md">
+    <div className="p-2 m-2 w-64 shadow-md h-80">
       <img className="rounded-lg" src={thumbnails.medium.url} alt="thumbnail" />
       <ul>
         <li className="font-bold py-2">{title}</li>
