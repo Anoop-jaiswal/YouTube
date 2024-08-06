@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOU_TUBE_SEARCH_API } from "../utils/constant";
+import { cacheResults } from "../utils/searchSlice";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestion, setSuggestion] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
+
+  const searchCache = useSelector((store) => store.search);
+  console.log(searchCache);
 
   const dispatch = useDispatch();
   const toggleMenuHandle = () => {
@@ -15,7 +19,13 @@ const Head = () => {
 
   //implementing debouncing
   useEffect(() => {
-    const timer = setTimeout(() => getSearchSuggestion(), 200);
+    const timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setSuggestion(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestion();
+      }
+    }, 200);
     return () => {
       clearTimeout(timer);
     };
@@ -25,6 +35,11 @@ const Head = () => {
     const data = await fetch(YOU_TUBE_SEARCH_API + searchQuery);
     const jsonData = await data.json();
     setSuggestion(jsonData[1]);
+    dispatch(
+      cacheResults({
+        [searchQuery]: jsonData[1],
+      })
+    );
   };
 
   return (
